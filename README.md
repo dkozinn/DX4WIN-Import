@@ -10,20 +10,13 @@ Press **Ctrl+Alt+I** while DX4WIN is running, and the script does the rest.
 
 ## What it does
 
-1. Activates DX4WIN's main window
-2. Opens **File → Import/Export...**
-3. In the Import/Export Filters dialog, opens **File → Import**
-4. Types your ADIF file path into the Windows file picker and confirms
-5. In the "Options for duplicate QSOs" dialog, sets the dropdown to **"Imported QSO is ignored"** and clicks **OK**
-6. When finished, it leaves the import summary dialog box open for review
-
-If the Import/Export Filters dialog is already open when you press the hotkey, the script detects that and skips ahead instead of disrupting it.
+The script simulates the user working through the regular process to import an ADIF file. It stops on the import summary dialog so that you can review the results.
 
 ---
 
 ## Minimum requirements
 
-- **Windows 10 or later** (64-bit recommended). The script uses standard Win32 dialog classes and should work on any modern Windows version, but it has only been tested on Windows 10/11.
+- **Windows 10 or later** (64-bit recommended). The script uses standard Win32 dialog classes and should work on any modern Windows version, but it has only been tested on Windows 11.
 - **DX4WIN version 9.0.9** (see compatibility note above)
 - If running the **.ahk script** (not the compiled .exe): [AutoHotkey v2.0](https://www.autohotkey.com/) or later must be installed
 - If running the **DX4WIN_Import.exe**: no separate AutoHotkey installation is required — it's self-contained
@@ -36,7 +29,7 @@ There are three ways to use this. Pick whichever fits your setup:
 
 | Method | Best for |
 | --- | --- |
-| **DX4WIN_Import.exe** | Users who don't have AutoHotkey installed and just want it to work |
+| **DX4WIN_Import.exe** | Users who don't have AutoHotkey installed |
 | **Standalone .ahk script** | Users who have AutoHotkey installed and want to see/edit the code |
 | **Included into your own main AHK script** | Users who already run a personal AHK script at startup and want this folded into it |
 
@@ -44,9 +37,9 @@ There are three ways to use this. Pick whichever fits your setup:
 
 ## Option A: Running the executable (DX4WIN_Import.exe)
 
-1. Copy `DX4WIN_Import.exe` to a permanent folder (e.g. `C:\Scripts\` or wherever you keep ham radio utilities) — avoid leaving it in your Downloads folder long-term.
+1. Copy `DX4WIN_Import.exe` to a permanent folder (e.g. `C:\Scripts\` or wherever you keep ham radio utilities).
 2. Double-click `DX4WIN_Import.exe` to run it. A tray icon will appear, indicating it's running in the background.
-3. **First run only:** since no configuration file exists yet, you'll be prompted to select your ADIF log file (e.g. the file WSJT-X writes to). Choose it in the file dialog that appears.
+3. **First run only:** you'll be prompted to select your ADIF log file (e.g. the file WSJT-X writes to). Choose it in the file dialog that appears.
    - This creates a file named `DX4WIN_Import.ini` in the same folder as the .exe, storing your chosen path.
    - On every run after this, it reads silently from that .ini — you won't be asked again unless the .ini is deleted or moved.
 4. With DX4WIN running, press **Ctrl+Alt+I** to trigger the import.
@@ -54,6 +47,8 @@ There are three ways to use this. Pick whichever fits your setup:
 **To change the ADIF file path later:** close the program (right-click the tray icon → Exit), delete `DX4WIN_Import.ini`, and run the .exe again to be re-prompted. Alternatively, open `DX4WIN_Import.ini` in a text editor and edit the path directly.
 
 **To run it automatically at Windows startup:** place a shortcut to `DX4WIN_Import.exe` in your Windows Startup folder (`Win+R`, type `shell:startup`, press Enter, then copy a shortcut to the .exe into that folder).
+
+> **Windows warnings:** The first time you run this you may get a warning from Windows that you are running an unsigned program. If you are not comfortable allowing this, you should install Autohotkey and run the script as described below.
 
 ---
 
@@ -77,7 +72,7 @@ There are three ways to use this. Pick whichever fits your setup:
 
 ---
 
-## Option C: Including it in your own main AHK script
+## Option C: Including it in your own main AHK script (Advanced)
 
 If you already run a personal AutoHotkey script at startup and want this folded in rather than run as a separate process:
 
@@ -114,4 +109,4 @@ By default the hotkey is **Ctrl+Alt+I**, set by this line in the script:
 ^!i::DoDX4WinImport()
 ```
 
-`^` = Ctrl, `!` = Alt, `i` = the I key. See the [AutoHotkey hotkey symbol reference](https://www.autohotkey.com/docs/v2/Hotkeys.htm#Symbols) if you'd like to change it to something else.
+`^` = Ctrl, `!` = Alt, `i` = the I key. See the [AutoHotkey hotkey symbol reference](https://www.autohotkey.com/docs/v2/Hotkeys.htm#Symbols) if you'd like to change it to something else. **Note**: The hotkey cannot be changed if you are running the .exe version.
